@@ -23,6 +23,7 @@ import ChatRoom from './view/pages/ChatRoom';
 import MyRooms from "./view/pages/MyRooms";
 import ActivityRooms from "./view/pages/ActivityRooms";
 import Profile from "./view/pages/Profile";
+import Map from "./view/pages/Map";
 
 //Hooks
 import { useEffect, useState } from 'react';
@@ -186,6 +187,7 @@ const App = () =>{
                 <Route path="MyRooms" element={<MyRooms />}/>
                 <Route path="Profile" element={<Profile />}/>
                 <Route path="ChatRoom" element={<ChatRoom chatRoom={chatRoom}/>}/>
+                <Route path="Map" element={<Map/>}/>
               </Route>
             </Route>
             <Route path="*" element={<p>There's nothing here: 404!</p>} />
