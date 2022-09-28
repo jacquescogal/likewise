@@ -16,6 +16,22 @@ import AddIcon from '@mui/icons-material/Add';
 import EventRoomCreate from '../components/EventRoomCreate';
 import EventRoomJoin from '../components/EventRoomJoin';
 
+
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+
+import "typeface-raleway";
+
+//date picker
+import dayjs from 'dayjs';
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
 const EventRooms = ({eventRoom,setChatRoom}) => {
   const [eRooms,setERooms]=useState([]);
   const [openCreate,setOpenCreate]=useState(false);
@@ -60,16 +76,48 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
   const dateTime="29 Sep 2022";
   const activityName="Swimming"
 
+  const [value, setValue] = React.useState(dayjs());
+
   return (
+
+    <Box sx={{marginLeft:"20px"}}>
+      <Box sx={{ flexGrow: 1, height: '80px'}}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography height= '80px'>
+          <h1 style={{marginTop:"12px", fontFamily:"serif", fontWeight: 'bold', fontSize: '45px', color:'white'}}> Events for: {activityName} 
+          <Fab size="small" color="primary" aria-label="add" sx={{marginLeft:'20px'}} onClick={handleClickOpen}>
+            <AddIcon style={{fill:'white'}}/>
+          </Fab>
+        </h1>
+        </Typography>
+  
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="Filter by date"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={({ inputRef, inputProps, InputProps }) => (
+          //how to change color
+          <Box sx={{ display: 'flex', alignItems: 'center', marginLeft:"100px", marginTop:"8px" }}>
+            <input ref={inputRef} {...inputProps} sx={{color:'white'}}/>
+            {InputProps?.endAdornment}
+          </Box>
+        )}
+      />
+    </LocalizationProvider>
+
+        </Toolbar>
+      </AppBar>
+    </Box>
     <div>
       {(eRooms)?
     <menu>
     <div>
-      <h1>
-        Events for: {activityName}
-        <Fab size="small" color="primary" aria-label="add" sx={{marginTop:'4px', marginLeft:'4px'}} onClick={handleClickOpen}>
-        <AddIcon style={{fill:'white'}}/>
-      </Fab>
+      
+      <h2 style={{ fontSize: 18}}>
         <EventRoomCreate openCreate={openCreate} setOpenCreate={setOpenCreate} createChatRoom={createChatRoom}/>
         <EventRoomJoin openJoin={openJoin} setOpenJoin={setOpenJoin}
         eventCard={eventCard}
@@ -93,8 +141,11 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
           setEventCard={setEventCard} />
           </div>
         ))}
-      </h1>
+      </h2>
     </div>
+
+    </Box>
+
     </menu>
 :<div
 style={{

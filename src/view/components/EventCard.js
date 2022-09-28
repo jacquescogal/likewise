@@ -13,7 +13,7 @@ const BasicCard = ({nameOfEvent,date,time,location,pax,cap,numOfJoiners,capacity
   const navigate=useNavigate();
 
   return (
-    <Card sx={{display:'flex',minWidth: 50, ':hover':{boxShadow:'10'}, marginTop:'6px'}}>
+    <Card sx={{display:'flex',minWidth: 50, ':hover':{boxShadow:'10'}, marginTop:'15px', fill:'#cd853f'}}>
       <CardContent>
         <h1>{nameOfEvent}</h1>
         <p>{date}, {numOfJoiners}/{capacity} joiners</p>
