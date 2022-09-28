@@ -49,8 +49,7 @@ const Profile = () => {
   return (
     <menu>
     <div>
-      <h1>Profile</h1>
-
+      <h1 style={{marginTop:"12px", fontFamily:"serif", fontWeight: 'bold', fontSize: '50px', color:'#ffad01'}}>Profile</h1>
       <section>
       <br></br>
       <img src={profileInfo.imageUrl} width={200} height={200}></img>
@@ -60,7 +59,7 @@ const Profile = () => {
 
       <section>
        Username:
-      <p style={{minHeight:'25px',backgroundColor: "white", border:"1px solid orange",borderRadius: '5px', borderRight : '300px'}} >
+      <p style={{minHeight:'25px',backgroundColor: "white", border:"1px solid orange", borderRadius: '5px', borderRight : '300px'}} >
       {profileInfo.username}
       </p></section>
 

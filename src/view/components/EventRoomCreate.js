@@ -61,7 +61,6 @@ export default function EventRoomCreate({openCreate,setOpenCreate,createChatRoom
   return (
     <div>
       <Dialog open={openCreate} onClose={handleClose}>
-        
         <DialogTitle>Create Room</DialogTitle>
         <DialogContent>
           <DialogContentText>
