@@ -64,68 +64,61 @@ export default function EventRoomCreate({openCreate,setOpenCreate,createChatRoom
         
         <DialogTitle>Create Room</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Provide the following details to create a room now:
-          </DialogContentText>
+          <DialogContentText>Provide the following details to create a room now:</DialogContentText>
           <Stack spacing={1.5}>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Event name"
-            fullWidth
-            variant="standard"
-            onChange={e=>setRoomName(e.target.value)}
-          />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Event name"
+              fullWidth
+              variant="standard"
+              onChange={e=>setRoomName(e.target.value)}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Location"
+              fullWidth
+              variant="standard"
+              onChange={e=>setLocation(e.target.value)}
+            />
+            
+            {/* DateTime Picker */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <MobileDateTimePicker
+                disablePast
+                minutesStep={15}
+                minDateTime={dayjs().add(1, 'day').subtract(dayjs().hour(),'hour')}
+                views={['month','day','hours','minutes']}
+                defaultCalendarMonth={dayjs()}
+                onChange={e=>{setDateTime({value:e,error:false});console.log('changed');}}
+                value={dateTime.value}
+                label="Date & Time of Event"
+                inputFormat="YYYY/MM/DD hh:mm a"
+                renderInput={(params) => <TextField {...params} />}
+                onError={value=>{console.log('error');(value!==null)?setDateTime({value:dateTime.value,error:true}):console.log('fixed')}}
+              />
+            </LocalizationProvider>
 
-<TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Location"
-            fullWidth
-            variant="standard"
-            onChange={e=>setLocation(e.target.value)}
-          />
-
-
-          {/* DateTime Picker */}
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-
-      <MobileDateTimePicker
-      disablePast
-      minutesStep={15}
-minDateTime={dayjs().add(1, 'day').subtract(dayjs().hour(),'hour')}
-views={['month','day','hours','minutes']}
-defaultCalendarMonth={dayjs()}
-onChange={e=>{setDateTime({value:e,error:false});console.log('changed');}}
-          value={dateTime.value}
-          label="Date & Time of Event"
-          inputFormat="YYYY/MM/DD hh:mm a"
-          renderInput={(params) => <TextField {...params} />}
-          onError={value=>{console.log('error');(value!==null)?setDateTime({value:dateTime.value,error:true}):console.log('fixed')}}
-        />
-        </LocalizationProvider>
-
-          <FormControl margin="dense" fullWidth>
-        <InputLabel id="Capacity">Capacity</InputLabel>
-        <Select
-          labelId="Capacity"
-          id="CapacitySelect"
-          value={cap}
-          label="Capacity"
-          onChange={e=>{setCap(e.target.value);}}
-        >
-          <MenuItem value={1}>
-            1
-          </MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-        </Select>
-        
-      </FormControl>
-      </Stack>
+            <FormControl margin="dense" fullWidth>
+              <InputLabel id="Capacity">Capacity</InputLabel>
+              <Select
+                labelId="Capacity"
+                id="CapacitySelect"
+                value={cap}
+                label="Capacity"
+                onChange={e=>{setCap(e.target.value);}}
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+              </Select>
+              
+            </FormControl>
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
