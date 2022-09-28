@@ -27,7 +27,7 @@ import { toast } from 'react-toastify';
 
 export default function EventRoomCreate({openCreate,setOpenCreate,createChatRoom}) {
 
-    const [cap,setCap]=useState(1)
+    const [cap,setCap]=useState(2)
     const [roomName,setRoomName]=useState('')
     const [location,setLocation]=useState('')
     const [dateTime,setDateTime]=useState({value:null,error:null})
@@ -54,7 +54,8 @@ export default function EventRoomCreate({openCreate,setOpenCreate,createChatRoom
     }
     if (pass===true){
         setOpenCreate(false);
-        createChatRoom({name:roomName,cap:cap,location:location,time:dateTime.value.format('DD/MM/YYYY hh:mm A')})
+        console.log(dateTime.value.$d)
+        createChatRoom({name:roomName,cap:cap,location:location,time:dateTime.value.$d})
     }
   };
 
@@ -115,12 +116,15 @@ onChange={e=>{setDateTime({value:e,error:false});console.log('changed');}}
           label="Capacity"
           onChange={e=>{setCap(e.target.value);}}
         >
-          <MenuItem value={1}>
-            1
-          </MenuItem>
           <MenuItem value={2}>2</MenuItem>
           <MenuItem value={3}>3</MenuItem>
           <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={7}>7</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
+          <MenuItem value={9}>9</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
         </Select>
         
       </FormControl>

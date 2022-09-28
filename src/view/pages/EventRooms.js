@@ -5,12 +5,16 @@ import { db } from '../../firebase-config';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Button } from '@mui/material';
+import { CircularProgress } from '@mui/material';
+
+import dayjs from 'dayjs';
 
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import EventRoomCreate from '../components/EventRoomCreate';
+import EventRoomJoin from '../components/EventRoomJoin';
 
 
 import AppBar from '@mui/material/AppBar';
@@ -31,6 +35,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 const EventRooms = ({eventRoom,setChatRoom}) => {
   const [eRooms,setERooms]=useState([]);
   const [openCreate,setOpenCreate]=useState(false);
+  const [openJoin,setOpenJoin]=useState(false);
+  const [eventCard,setEventCard]=useState(null);
 
   useEffect(()=>{
     if (eventRoom===''){
@@ -52,14 +58,14 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
     setOpenCreate(true);
   };
 
-  const createChatRoom=async({name='testRoom',cap=10,location='Singapore',pax=1,time=serverTimestamp()})=>{
+  const createChatRoom=async({name,cap,location,time})=>{
 
     //https://firebase.google.com/docs/firestore/manage-data/add-data
     const docRef = await addDoc(collection(db, 'aRooms/'+eventRoom+'/eRooms'), {
       name: name,
       cap: cap,
-      pax: pax,
-      rem: cap-pax,
+      pax: 1,
+      rem: cap-1,
       location:location,
       time:time
     });
@@ -68,12 +74,12 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
 
   //hardcoded, to be changed
   const dateTime="29 Sep 2022";
-  const numOfJoiners=3;
   const activityName="Swimming"
 
   const [value, setValue] = React.useState(dayjs());
 
   return (
+
     <Box sx={{marginLeft:"20px"}}>
       <Box sx={{ flexGrow: 1, height: '80px'}}>
       <AppBar position="static">
@@ -107,17 +113,50 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
       </AppBar>
     </Box>
     <div>
+      {(eRooms)?
+    <menu>
+    <div>
       
       <h2 style={{ fontSize: 18}}>
         <EventRoomCreate openCreate={openCreate} setOpenCreate={setOpenCreate} createChatRoom={createChatRoom}/>
+        <EventRoomJoin openJoin={openJoin} setOpenJoin={setOpenJoin}
+        eventCard={eventCard}
+        setEventCard={setEventCard}
+        setChatRoom={setChatRoom}/>
         {eRooms.map(eventObject=>(
           <div key={eventObject.id} className="col-md-auto">
-          <EventCard key={eventObject.id} setChatRoom={setChatRoom} nameOfEvent={eventObject.name} dateTime={dateTime} numOfJoiners={numOfJoiners} chatRoomId={eventObject.id} thePath={'/aRooms/'+eventRoom+'/eRooms/'+eventObject.id+'/messages'} />
+          <EventCard key={eventObject.id} 
+          setChatRoom={setChatRoom} 
+          nameOfEvent={eventObject.name} 
+          date={dayjs.unix(eventObject.time.seconds).format('DD/MM/YYYY')} 
+          time={dayjs.unix(eventObject.time.seconds).format('hh:mm A')}
+          numOfJoiners={eventObject.pax} 
+          capacity={eventObject.cap}
+          location={eventObject.location}
+          pax={eventObject.pax}
+          cap={eventObject.cap}
+          chatRoomId={eventObject.id} 
+          thePath={'/aRooms/'+eventRoom+'/eRooms/'+eventObject.id}
+          setOpenJoin={setOpenJoin}
+          setEventCard={setEventCard} />
           </div>
         ))}
       </h2>
     </div>
+
     </Box>
+
+    </menu>
+:<div
+style={{
+    position: 'absolute', left: '60%', top: '50%',
+    transform: 'translate(-50%, -50%)'
+}}
+>
+  <p>loading...</p>
+  <CircularProgress color="secondary" size={50} thickness={5}/>
+</div>}
+</div>
   )
 }
 

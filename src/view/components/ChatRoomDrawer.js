@@ -18,7 +18,7 @@ import WomanIcon from '@mui/icons-material/Woman';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function TemporaryDrawer() {
+const TemporaryDrawer=({roomDate,roomTime,roomLocation,roomPax,roomCap})=> {
   const [state, setState] = React.useState({
     right: false
   });
@@ -44,24 +44,24 @@ export default function TemporaryDrawer() {
             <ListItemIcon>
                 <CalendarMonthIcon/>
             </ListItemIcon>
-            <ListItemText primary='Date' secondary='20/09/2022'/> {/*put date text here*/}
+            <ListItemText primary='Date' secondary={roomDate}/> {/*put date text here*/}
         </ListItem>
         <ListItem key='Time'>
             <ListItemIcon>
                 <ScheduleIcon/>
             </ListItemIcon>
-            <ListItemText primary='Time' secondary='10:45 pm'/> {/*put time text here*/}
+            <ListItemText primary='Time' secondary={roomTime}/> {/*put time text here*/}
         </ListItem>
         <ListItem key='Location'>
             <ListItemIcon>
                 <PlaceIcon/>
             </ListItemIcon>
-            <ListItemText primary='Location' secondary='NTU Sports Hall'/> {/*put location text here*/}
+            <ListItemText primary='Location' secondary={roomLocation}/> {/*put location text here*/}
         </ListItem>
       </List>
       <Divider />
       <List>
-      <ListItemText primary='Attendees:' sx={{marginLeft:'10px'}}/>
+      <ListItemText sx={{marginLeft:'10px'}}>Attendees ({roomPax}/{roomCap}) :</ListItemText>
       <ListItem>
             <ListItemIcon>
                 <ManIcon sx={{fill:'#ffad01'}}/>
@@ -108,3 +108,5 @@ export default function TemporaryDrawer() {
     </div>
   );
 }
+
+export default TemporaryDrawer

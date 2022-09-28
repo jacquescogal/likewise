@@ -3,6 +3,7 @@ import ActivityCard from '../components/ActivityCard'
 import {query,collection,orderBy,onSnapshot} from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import { useEffect } from 'react';
+import { CircularProgress } from '@mui/material';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 const ActivityRooms = ({setEventRoom}) => {
 
-  const [aRooms,setARooms]=useState([]);
+  const [aRooms,setARooms]=useState(null);
 
   useEffect(()=>{
     const q = query(collection(db, 'aRooms'),orderBy('cap','desc'))
@@ -31,6 +32,7 @@ const ActivityRooms = ({setEventRoom}) => {
 
   
   return (
+
     <Box sx={{marginLeft:"20px"}}>
     <div > 
     <Box sx={{ flexGrow: 1, height: '80px'}}>
@@ -42,6 +44,10 @@ const ActivityRooms = ({setEventRoom}) => {
         </Toolbar>
       </AppBar>
     </Box>
+
+    <div >
+      <h1 style={{marginLeft:"12px", marginTop:"12px"}}>ActivityRooms</h1>
+      {(aRooms)?
     <div className="container-fluid d-flex justify-content-center" style={{minWidth:1000,color:'orange',bgcolor:'orange'}}>
       <div className="row">
         {aRooms.map(activityObject=>(
@@ -51,11 +57,20 @@ const ActivityRooms = ({setEventRoom}) => {
           </div>
         ))}
       </div>
+    </div>:<div
+    style={{
+        position: 'absolute', left: '60%', top: '50%',
+        transform: 'translate(-50%, -50%)'
+    }}
+    >
+      <p>loading...</p>
+      <CircularProgress color="secondary" size={50} thickness={5}/>
+    </div>}
     </div>
+
     </div>
 
   </Box>
-    
   )
 }
 

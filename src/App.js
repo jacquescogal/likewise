@@ -16,7 +16,7 @@ import Login from "./view/pages/Login";
 import Register from "./view/pages/Register";
 import Home from "./view/pages/Home";
 import Onboard from './view/pages/Onboard';
-
+import ResetPassword from './view/pages/ResetPassword';
 import EventRooms from "./view/pages/EventRooms";
 import ChatRoom from './view/pages/ChatRoom';
 
@@ -89,9 +89,11 @@ const App = () =>{
         })
   }
 
+
   const handleRegister = () => {
     //Check for new field's existence and that there is no duplicate of username before creating.
     //Add upload of profile photo
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     const auth = getAuth();
     console.log(imageUrl);
     console.log(email);
@@ -109,6 +111,18 @@ const App = () =>{
     }
     else if (/[a-zA-Z]/.test(password) === false) {
       toast.error('Password must contain alphabets');
+    }
+    else if (specialChars.test(password) == false) {
+      toast.error('Password must contain at least one special character');
+    }
+    else if (username.length < 4) {
+      toast.error('Username must be 4 characters or longer');
+    }
+    else if ((parseInt(DOB.slice(-4)) > 2005) | (parseInt(DOB.slice(-4)) < 1980)) {
+      toast.error('Please check your date of birth again');
+    }
+    else if ((gender == '') | (DOB == '') | (course == '') | (studyYear == '')) {
+      toast.error('Please fill up all required information');
     }
     else {
       createUserWithEmailAndPassword(auth, email, password)
@@ -161,8 +175,9 @@ const App = () =>{
         <ToastContainer/>
         <Routes>
             <Route path='/' element={<Onboard />}>
-              <Route path="Login" element={<Login setEmail={setEmail} setPassword={setPassword} handleAction={handleLogin} handleReset={handlePasswordReset}/>}/>
+              <Route path="Login" element={<Login setEmail={setEmail} setPassword={setPassword} handleAction={handleLogin}/>}/>
               <Route path="Register" element={<Register setEmail={setEmail} email={email} setPassword={setPassword} handleAction={handleRegister} setUsername={setUsername} setImageUrl={setImageUrl} setGender={setGender} setDOB={setDOB} setCourse={setCourse} setStudyYear={setStudyYear} course={course} studyYear={studyYear} DOB={DOB} gender={gender}/>}/>
+              <Route path="ResetPassword" element={<ResetPassword setEmail={setEmail} handleReset={handlePasswordReset}/>}/>
             </Route>
             <Route element={<ProtectedRoute user={user}/>}>
               <Route path="/Home" element={<Home />}>

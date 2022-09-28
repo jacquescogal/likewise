@@ -59,3 +59,17 @@
 .buttonIcon {
   fill: white;
 }
+
+.fields {
+  margin: 50px 0px;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border-width: 5px;
+  border-color: gray;
+  border-style: outset;
+}

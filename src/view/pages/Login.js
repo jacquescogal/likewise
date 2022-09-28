@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { TextField } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({setEmail, setPassword, handleAction, handleReset}) => {
   
@@ -11,6 +12,8 @@ const Login = ({setEmail, setPassword, handleAction, handleReset}) => {
     setEmail('');
     setPassword('');
   },[])
+
+  let navigate=useNavigate()
 
   return (
     <div style={{
@@ -25,7 +28,6 @@ const Login = ({setEmail, setPassword, handleAction, handleReset}) => {
       <TextField label="E-mail" onChange={e=>setEmail(e.target.value)}/>
       <TextField label="Password" onChange={e=>setPassword(e.target.value)} type='password'/>
       <Button label="Confirm Login" style={{alignSelf:'center'}} handleAction={handleAction} />
-      <Button label="Reset password" style={{alignSelf:'center'}} handleAction={handleReset} />     
       </Stack>
     </div>
   )

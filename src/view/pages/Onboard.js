@@ -39,6 +39,15 @@ const Onboard = () => {
                         color: 'white',
                       },
                     }}>Register</Button>
+                <Button onClick={()=>
+                    {navigate('ResetPassword');
+                    }} variant="outlined"
+                    sx={{
+                      ':hover': {
+                        bgcolor: 'primary.main', // theme.palette.primary.main
+                        color: 'white',
+                      },
+                    }}>Forgotten Password?</Button>
             </ButtonGroup>
       </Stack>
       </div>
