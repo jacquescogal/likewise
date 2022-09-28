@@ -12,6 +12,22 @@ import AddIcon from '@mui/icons-material/Add';
 
 import EventRoomCreate from '../components/EventRoomCreate';
 
+
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+
+import "typeface-raleway";
+
+//date picker
+import dayjs from 'dayjs';
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
 const EventRooms = ({eventRoom,setChatRoom}) => {
   const [eRooms,setERooms]=useState([]);
   const [openCreate,setOpenCreate]=useState(false);
@@ -55,23 +71,53 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
   const numOfJoiners=3;
   const activityName="Swimming"
 
+  const [value, setValue] = React.useState(dayjs());
+
   return (
-    <menu>
+    <Box sx={{marginLeft:"20px"}}>
+      <Box sx={{ flexGrow: 1, height: '80px'}}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography height= '80px'>
+          <h1 style={{marginTop:"12px", fontFamily:"serif", fontWeight: 'bold', fontSize: '45px', color:'white'}}> Events for: {activityName} 
+          <Fab size="small" color="primary" aria-label="add" sx={{marginLeft:'20px'}} onClick={handleClickOpen}>
+            <AddIcon style={{fill:'white'}}/>
+          </Fab>
+        </h1>
+        </Typography>
+  
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="Filter by date"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={({ inputRef, inputProps, InputProps }) => (
+          //how to change color
+          <Box sx={{ display: 'flex', alignItems: 'center', marginLeft:"100px", marginTop:"8px" }}>
+            <input ref={inputRef} {...inputProps} sx={{color:'white'}}/>
+            {InputProps?.endAdornment}
+          </Box>
+        )}
+      />
+    </LocalizationProvider>
+
+        </Toolbar>
+      </AppBar>
+    </Box>
     <div>
-      <h1>
-        Events for: {activityName}
-        <Fab size="small" color="primary" aria-label="add" sx={{marginTop:'4px', marginLeft:'4px'}} onClick={handleClickOpen}>
-        <AddIcon style={{fill:'white'}}/>
-      </Fab>
+      
+      <h2 style={{ fontSize: 18}}>
         <EventRoomCreate openCreate={openCreate} setOpenCreate={setOpenCreate} createChatRoom={createChatRoom}/>
         {eRooms.map(eventObject=>(
           <div key={eventObject.id} className="col-md-auto">
           <EventCard key={eventObject.id} setChatRoom={setChatRoom} nameOfEvent={eventObject.name} dateTime={dateTime} numOfJoiners={numOfJoiners} chatRoomId={eventObject.id} thePath={'/aRooms/'+eventRoom+'/eRooms/'+eventObject.id+'/messages'} />
           </div>
         ))}
-      </h1>
+      </h2>
     </div>
-    </menu>
+    </Box>
   )
 }
 
