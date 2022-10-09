@@ -36,7 +36,7 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => 
 
   const [cap,setCap]=useState(1)
   const [roomName,setRoomName]=useState('')
-  const [location,setLocation]=useState('')
+  //const [location,setLocation]=useState('')
   const [dateTime,setDateTime]=useState({value:null,error:null})
 
   const handleClose = () => {
@@ -55,13 +55,13 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => 
         pass=false
         toast.error('Event name cannot be left blank')
     }
-    if (location===''){
+    if (value===null){ //location has been changed to value for autocomplete service
         pass=false
         toast.error('Location cannot be leftblank')
     }
     if (pass===true){
         setOpenCreate(false);
-        createChatRoom({name:roomName,cap:cap,location:location,time:dateTime.value.format('DD/MM/YYYY hh:mm A')})
+        createChatRoom({name:roomName,cap:cap,location:value,placeid:value.place_id,time:dateTime.value.format('DD/MM/YYYY hh:mm A')})
     }
   };
 
@@ -149,7 +149,6 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => 
                 setOptions(newValue ? [newValue, ...options] : options);
                 setValue(newValue);
                 console.log("new value", newValue);
-                setLocation(newValue);
               }}
               onInputChange={(event, newInputValue) => {
                 console.log("oninputchange running");

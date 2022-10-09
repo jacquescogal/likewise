@@ -36,7 +36,7 @@ const EventRooms = ({eventRoom,setChatRoom,isLoaded}) => {
     setOpenCreate(true);
   };
 
-  const createChatRoom=async({name='testRoom',cap=10,location='Singapore',pax=1,time=serverTimestamp()})=>{
+  const createChatRoom=async({name='testRoom',cap=10,pax=1,location='Singapore',placeid='',time=serverTimestamp()})=>{
 
     //https://firebase.google.com/docs/firestore/manage-data/add-data
     const docRef = await addDoc(collection(db, 'aRooms/'+eventRoom+'/eRooms'), {
@@ -44,7 +44,8 @@ const EventRooms = ({eventRoom,setChatRoom,isLoaded}) => {
       cap: cap,
       pax: pax,
       rem: cap-pax,
-      location:location,
+      location: location,
+      placeid: placeid,
       time:time
     });
 
