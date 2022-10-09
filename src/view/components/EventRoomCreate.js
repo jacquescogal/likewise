@@ -32,21 +32,7 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.setAttribute('async', '');
-  script.setAttribute('id', id);
-  script.src = src;
-  position.appendChild(script);
-}
-
-const autocompleteService = { current: null };
-
-const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom}) => {
+const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => {
 
   const [cap,setCap]=useState(1)
   const [roomName,setRoomName]=useState('')
@@ -79,22 +65,10 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom}) => {
     }
   };
 
+  const autocompleteService = { current: null };
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
-  const loaded = useRef(false);
-
-  if (typeof window !== 'undefined' && !loaded.current) {
-    if (!document.querySelector('#google-maps')) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`,
-        document.querySelector('head'),
-        'google-maps',
-      );
-    }
-
-    loaded.current = true;
-  }
 
   const fetch = useMemo(
     () =>
@@ -158,15 +132,6 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom}) => {
               variant="standard"
               onChange={e=>setRoomName(e.target.value)}
             />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Location"
-              fullWidth
-              variant="standard"
-              onChange={e=>setLocation(e.target.value)}
-            />
             <Autocomplete
               id="google-map-demo"
               //sx={{ width: 300 }}
@@ -175,17 +140,21 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom}) => {
               }
               filterOptions={(x) => x}
               options={options}
-              autoComplete
-              includeInputInList
+              //autoComplete
+              //includeInputInList
               filterSelectedOptions
               value={value}
               onChange={(event, newValue) => {
+                console.log("onchange running");
                 setOptions(newValue ? [newValue, ...options] : options);
                 setValue(newValue);
+                console.log("new value", newValue);
                 setLocation(newValue);
               }}
               onInputChange={(event, newInputValue) => {
+                console.log("oninputchange running");
                 setInputValue(newInputValue);
+                console.log("new input value", newInputValue);
               }}
               renderInput={(params) => (
                 <TextField {...params} label="Add a location" fullWidth />

@@ -12,7 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import EventRoomCreate from '../components/EventRoomCreate';
 
-const EventRooms = ({eventRoom,setChatRoom}) => {
+const EventRooms = ({eventRoom,setChatRoom,isLoaded}) => {
   const [eRooms,setERooms]=useState([]);
   const [openCreate,setOpenCreate]=useState(false);
 
@@ -63,7 +63,7 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
         <Fab size="small" color="primary" aria-label="add" sx={{marginTop:'4px', marginLeft:'4px'}} onClick={handleClickOpen}>
         <AddIcon style={{fill:'white'}}/>
       </Fab>
-        <EventRoomCreate openCreate={openCreate} setOpenCreate={setOpenCreate} createChatRoom={createChatRoom}/>
+        <EventRoomCreate openCreate={openCreate} setOpenCreate={setOpenCreate} createChatRoom={createChatRoom} isLoaded={isLoaded}/>
         {eRooms.map(eventObject=>(
           <div key={eventObject.id} className="col-md-auto">
           <EventCard key={eventObject.id} setChatRoom={setChatRoom} nameOfEvent={eventObject.name} dateTime={dateTime} numOfJoiners={numOfJoiners} chatRoomId={eventObject.id} thePath={'/aRooms/'+eventRoom+'/eRooms/'+eventObject.id+'/messages'} />

@@ -37,7 +37,19 @@ import { Outlet ,Navigate} from 'react-router-dom';
 //adding Doc to firestore
 import { doc, setDoc } from "firebase/firestore"; 
 
+//google map api
+import { useLoadScript } from '@react-google-maps/api';
+
 const App = () =>{
+  //load google map script
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
+  });
+
+  if (loadError) {
+    console.log("Google maps API was not able to load.")
+  }
   
   const [user,setUser]=useState('');
   const [eventRoom,setEventRoom]=useState('');
@@ -55,9 +67,6 @@ const App = () =>{
   const [studyYear,setStudyYear]=useState('')
 
   let navigate=useNavigate();
-
-  
-
   
   const handleLogin = () =>{
     const auth = getAuth();
@@ -89,7 +98,6 @@ const App = () =>{
           }
         })
   }
-
 
   const handleRegister = () => {
     //Check for new field's existence and that there is no duplicate of username before creating.
@@ -183,11 +191,11 @@ const App = () =>{
             <Route element={<ProtectedRoute user={user}/>}>
               <Route path="/Home" element={<Home />}>
                 <Route path="ActivityRooms" element={<ActivityRooms setEventRoom={setEventRoom}/>}/>
-                <Route path="EventRooms" element={<EventRooms setChatRoom={setChatRoom} eventRoom={eventRoom} chatRoom={chatRoom}/>}/>
+                <Route path="EventRooms" element={<EventRooms setChatRoom={setChatRoom} eventRoom={eventRoom} chatRoom={chatRoom} isLoaded={isLoaded}/>}/>
                 <Route path="MyRooms" element={<MyRooms />}/>
                 <Route path="Profile" element={<Profile />}/>
                 <Route path="ChatRoom" element={<ChatRoom chatRoom={chatRoom}/>}/>
-                <Route path="Map" element={<Map/>}/>
+                {/* <Route path="Map" element={<Map/>}/> */}
               </Route>
             </Route>
             <Route path="*" element={<p>There's nothing here: 404!</p>} />
