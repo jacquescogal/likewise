@@ -32,7 +32,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
-const EventRooms = ({eventRoom,setChatRoom}) => {
+const EventRooms = ({eventRoom,setChatRoom,isLoaded}) => {
   const [eRooms,setERooms]=useState([]);
   const [openCreate,setOpenCreate]=useState(false);
   const [openJoin,setOpenJoin]=useState(false);
@@ -64,9 +64,10 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
     const docRef = await addDoc(collection(db, 'aRooms/'+eventRoom+'/eRooms'), {
       name: name,
       cap: cap,
-      pax: 1,
-      rem: cap-1,
-      location:location,
+      pax: 0,
+      rem: cap,
+      location: location,
+      placeid: placeid,
       time:time
     });
 
@@ -116,7 +117,6 @@ const EventRooms = ({eventRoom,setChatRoom}) => {
       {(eRooms)?
     <menu>
     <div>
-      
       <h2 style={{ fontSize: 18}}>
         <EventRoomCreate openCreate={openCreate} setOpenCreate={setOpenCreate} createChatRoom={createChatRoom}/>
         <EventRoomJoin openJoin={openJoin} setOpenJoin={setOpenJoin}

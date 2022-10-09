@@ -3,6 +3,7 @@ import ActivityCard from '../components/ActivityCard'
 import {query,collection,orderBy,onSnapshot} from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import { useEffect } from 'react';
+
 import { CircularProgress } from '@mui/material';
 
 import AppBar from '@mui/material/AppBar';
@@ -30,7 +31,6 @@ const ActivityRooms = ({setEventRoom}) => {
     })
   },[])
 
-  
   return (
 
     <Box sx={{marginLeft:"20px"}}>
