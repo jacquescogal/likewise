@@ -26,7 +26,7 @@ const BasicCard = ({nameOfEvent,numOfEvents,setEventRoom,imageOfEvent,timer}) =>
   let navigate=useNavigate();
   return (
     <Grow in={appear}>
-    <Card sx={{display:'flex',flexDirection:'column',minHeight:325,maxHeight:300,minWidth:250,maxWidth:250, ':hover':{boxShadow:'10'}, marginTop:6, marginLeft:"2px"}}>
+    <Card sx={{display:'flex',flexDirection:'column',minHeight:325,maxHeight:300,minWidth:250,maxWidth:250, ':hover':{boxShadow:'10'}, marginTop:1}}>
       <CardContent>
       <img style = {{width: 225, height:200,position:'relative',top:-20}} src = {imageOfEvent} alt = "" />
         <h1>{nameOfEvent}</h1>

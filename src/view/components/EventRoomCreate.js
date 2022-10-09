@@ -32,6 +32,7 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 
+
 const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => {
 
   const [cap,setCap]=useState(1)
@@ -118,7 +119,6 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => 
   return (
     <div>
       <Dialog open={openCreate} onClose={handleClose}>
-        
         <DialogTitle>Create Room</DialogTitle>
         <DialogContent>
           <DialogContentText>Provide the following details to create a room now:</DialogContentText>
@@ -223,12 +223,16 @@ const EventRoomCreate = ({openCreate,setOpenCreate,createChatRoom,isLoaded}) => 
                 label="Capacity"
                 onChange={e=>{setCap(e.target.value);}}
               >
-                <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
                 <MenuItem value={3}>3</MenuItem>
                 <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={9}>9</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
               </Select>
-              
             </FormControl>
           </Stack>
         </DialogContent>
